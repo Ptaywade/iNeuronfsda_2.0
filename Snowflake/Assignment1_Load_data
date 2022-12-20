@@ -1,5 +1,6 @@
 USE DATABASE "DEMO_DATABASE";
 
+--1.Load Table and Create primary Key
 CREATE or replace table Sales_Data_PT
      (	
       order_id VARCHAR(50) PRIMARY KEY,
@@ -27,7 +28,7 @@ CREATE or replace table Sales_Data_PT
 
 Select * from Sales_Data_PT;
 
----1 .SET PRIMARY KEY
+---2 .SET PRIMARY KEY
 --The primary key is already given while creating the table order_id
 
 CREATE OR REPLACE TABLE  Sales_Data_PT_Copy AS
@@ -40,17 +41,17 @@ ADD PRIMARY KEY (order_id);
 
 Select * from Sales_Data_PT_Copy;
 
----2. CHECK THE ORDER DATE AND SHIP DATE TYPE AND THINK IN WHICH DATA TYPE YOU HAVE TO CHANGE.
+---3. CHECK THE ORDER DATE AND SHIP DATE TYPE AND THINK IN WHICH DATA TYPE YOU HAVE TO CHANGE.
 
 Describe table Sales_Data_PT_Copy; -- AS whle creating a table alreday gave it in Date format
 
 Update Sales_Data_PT_Copy SET SHIP_DATE=TO_CHAR(DATE(SHIP_DATE,'YYYY-MM-DD'),'YYYY-MM-DD') ;
 
---3. EXTACT THE LAST NUMBER AFTER THE - AND CREATE OTHER COLUMN AND UPDATE IT.(EXTARCTING the number from order_id column)
+--4. EXTACT THE LAST NUMBER AFTER THE - AND CREATE OTHER COLUMN AND UPDATE IT.(EXTARCTING the number from order_id column)
 
 Select order_id, substr(ORDER_ID, 9) AS Extract_id from Sales_Data_PT_Copy;
 
---4.  FLAG ,IF DISCOUNT IS GREATER THEN 0 THEN  YES ELSE FALSE AND PUT IT IN NEW COLUMN FRO EVERY ORDER ID.
+--5.  FLAG ,IF DISCOUNT IS GREATER THEN 0 THEN  YES ELSE FALSE AND PUT IT IN NEW COLUMN FRO EVERY ORDER ID.
                
 Select *,
 CASE When DISCOUNT > 0 Then 'Yes'
